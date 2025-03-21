@@ -1,4 +1,4 @@
-# Cectcher
+# Cetcher (*C*over art f*etcher*)
 
 ## Simple CLI to embed cover art to your audio files
 
