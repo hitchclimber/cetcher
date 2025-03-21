@@ -53,7 +53,14 @@ jobs:
           inputs: >-
             ./dist/*.tar.gz
             ./dist/*.whl
+      - name: Check if tag exists
+        id: tag_exists
+        run: >-
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY"; then
+          echo "Tag already exists"
+          echo "tag_exists=true" >> $GITHUB_ENV
       - name: Create GitHub Release
+        if: env.tag_exists == 'false'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: >-
@@ -62,6 +69,7 @@ jobs:
           --repo "$GITHUB_REPOSITORY"
           --notes ""
       - name: Upload artifact signatures to GitHub Release
+        if: env.tag_exists == 'false'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         # Upload to GitHub Release using the `gh` CLI.
