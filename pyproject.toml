@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cetcher"
+version = "0.1"
+description = "Tool to embed cover art for audio files"
+authors = [{ name = "Michael Reuss", email = "mreuss@tuta.io" }]
+dependencies = ["requests", "mutagen", "rich"]
+requires-python = ">=3.8"
+
+[project.scripts]
+cetcher = "cetcher.cetcher:main"
