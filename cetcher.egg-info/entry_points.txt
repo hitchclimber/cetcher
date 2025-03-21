@@ -1,2 +1,0 @@
-[console_scripts]
-cetcher = cetcher.cetcher:main
