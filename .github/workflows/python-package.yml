@@ -57,7 +57,7 @@ jobs:
         id: tag_exists
         run: >-
           if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY"; then
-          echo "Tag already exists"
+          echo "Tag already exists" &&
           echo "tag_exists=true" >> $GITHUB_ENV
           fi
       - name: Create GitHub Release
