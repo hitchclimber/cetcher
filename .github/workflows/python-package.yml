@@ -55,10 +55,10 @@ jobs:
             ./dist/*.whl
       - name: Check if tag exists
         id: tag_exists
-        run: >-
+        run: |
           if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY"; then
-          echo "Tag already exists" &&
-          echo "tag_exists=true" >> $GITHUB_ENV
+            echo "Tag already exists" &&
+            echo "tag_exists=true" >> $GITHUB_ENV
           fi
       - name: Create GitHub Release
         if: env.tag_exists == 'false'
