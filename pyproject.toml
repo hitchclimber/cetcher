@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cetcher"
-version = "0.1"
+version = "0.1.1"
 description = "Tool to embed cover art for audio files"
 authors = [{ name = "Michael Reuss", email = "mreuss@tuta.io" }]
 dependencies = ["requests", "mutagen", "rich"]
