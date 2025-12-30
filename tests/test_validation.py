@@ -53,10 +53,9 @@ class TestFindAllValidLeaves:
         assert len(leaves) == 3
 
     def test_returns_sorted_directories(self, nested_artist_structure):
-        """Results should be sorted."""
+        """Results should be sorted by path (depth-first, sorted at each level)."""
         leaves = list(find_all_valid_leaves(nested_artist_structure))
-        leaf_names = [l.name for l in leaves]
-        assert leaf_names == sorted(leaf_names)
+        assert leaves == sorted(leaves)
 
     def test_empty_root_returns_nothing(self, empty_dir):
         """Empty directory should yield no results."""
