@@ -11,4 +11,4 @@ dependencies = ["requests", "mutagen", "rich"]
 requires-python = ">=3.8"
 
 [project.scripts]
-cetcher = "cetcher.cetcher:main"
+cetcher = "cetcher.main:main"
