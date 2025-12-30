@@ -4,7 +4,7 @@
 
 When downloading audio from questionable sources[^1], or better yet, recording from your vinyl record collection, your audio files player might not be able to display cover art, depending on its implementation. This script remedies that by looking up the artist and album (derived from your folder structure), searching the [Cover Art Archive](coverartarchive.org) to retrieve the album's MBID, fetching the corresponding cover art (if present) and embedding this into the audio files.
 
-[^1]: Not judging but their quality is often. _meh_
+[^1]: Not judging but their quality is often... _meh_
 
 ## Usage
 
