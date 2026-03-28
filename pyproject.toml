@@ -7,7 +7,7 @@ name = "cetcher"
 version = "0.1.1"
 description = "Tool to embed cover art for audio files"
 authors = [{ name = "Michael Reuss", email = "mreuss@tuta.io" }]
-dependencies = ["requests", "mutagen", "rich"]
+dependencies = ["requests", "mutagen", "rich", "Pillow"]
 requires-python = ">=3.8"
 
 [project.scripts]

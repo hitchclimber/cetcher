@@ -1,4 +1,5 @@
 import argparse
+import io
 import logging
 from pathlib import Path
 from re import compile
@@ -10,11 +11,14 @@ from mutagen import File as MutagenFile
 from mutagen.flac import Picture
 from mutagen.id3 import APIC
 from mutagen.mp4 import MP4Cover
+from PIL import Image
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.prompt import Confirm
 
 FILETYPES = {".mp3", ".flac", ".m4a"}
+# FLAC metadata block max size is 2^24 bytes; leave room for Picture block header
+MAX_FLAC_PICTURE_SIZE = 16776192
 HEADERS = {"User-Agent": "AlbumArtFetcher/0.1"}
 
 console = Console()
@@ -28,7 +32,26 @@ log = logging.getLogger("rich")
 SIMPLE_CLEANUP_PATTERN = compile(r"[-_\s]+")
 
 
+def shrink_image(data: bytes, max_size: int) -> Tuple[bytes, str]:
+    img = Image.open(io.BytesIO(data))
+    mime_type = "image/jpeg"
+    while True:
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG", quality=85)
+        result = buf.getvalue()
+        if len(result) <= max_size:
+            return result, mime_type
+        factor = 0.8
+        img = img.resize(
+            (int(img.width * factor), int(img.height * factor)), Image.LANCZOS
+        )
+        log.info(f"Resizing image to {img.width}x{img.height}")
+
+
 def embed_flac(audio, cover_data: bytes, mime_type: str):
+    if len(cover_data) > MAX_FLAC_PICTURE_SIZE:
+        log.warning("⚠️ Image too large for FLAC, resizing...")
+        cover_data, mime_type = shrink_image(cover_data, MAX_FLAC_PICTURE_SIZE)
     pic = Picture()
     pic.mime = mime_type or "image/jpeg"
     pic.desc = "front cover"
